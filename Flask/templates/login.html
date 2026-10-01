@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - LibraryHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #eef2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            width: 900px;
+            min-height: 540px;
+            background: white;
+            display: grid;
+            grid-template-columns: 42% 58%;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(31, 45, 80, 0.15);
+        }
+
+        .welcome-panel {
+            background: #263b80;
+            color: white;
+            padding: 55px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome-panel .logo {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 55px;
+        }
+
+        .welcome-panel h1 {
+            font-size: 37px;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .welcome-panel p {
+            line-height: 1.7;
+            color: #dbe3ff;
+        }
+
+        .shelf {
+            margin-top: 45px;
+            display: flex;
+            gap: 7px;
+            align-items: end;
+        }
+
+        .shelf span {
+            display: block;
+            width: 30px;
+            background: #6c63ff;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .shelf span:nth-child(1) {
+            height: 75px;
+        }
+
+        .shelf span:nth-child(2) {
+            height: 105px;
+        }
+
+        .shelf span:nth-child(3) {
+            height: 85px;
+        }
+
+        .shelf span:nth-child(4) {
+            height: 125px;
+        }
+
+        .shelf span:nth-child(5) {
+            height: 95px;
+        }
+
+        .form-panel {
+            padding: 65px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-panel h2 {
+            font-size: 31px;
+            color: #172033;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #667085;
+            margin-bottom: 35px;
+        }
+
+        .message {
+            background: #fff1f1;
+            color: #c0392b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #344054;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d7ddea;
+            border-radius: 9px;
+            outline: none;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #6c63ff;
+        }
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box input {
+            padding-right: 70px;
+        }
+
+        .show-btn {
+            position: absolute;
+            right: 12px;
+            top: 13px;
+            border: none;
+            background: none;
+            color: #5965c9;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 9px;
+            background: #263b80;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 25px;
+            color: #667085;
+        }
+
+        .register a {
+            color: #5965c9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 750px) {
+            .login-container {
+                width: 94%;
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-panel {
+                display: none;
+            }
+
+            .form-panel {
+                padding: 45px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+
+    <div class="welcome-panel">
+        <div class="logo">LibraryHub</div>
+
+        <h1>Welcome Back!</h1>
+
+        <p>
+            Login to access your library dashboard,
+            manage books and track issue records.
+        </p>
+
+        <div class="shelf">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="form-panel">
+        <h2>Sign in</h2>
+        <p class="subtitle">Enter your account details to continue.</p>
+
+        {% if message %}
+            <div class="message">{{ message }}</div>
+        {% endif %}
+
+        <form method="POST">
+
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Enter username" required>
+
+            <label>Password</label>
+
+            <div class="password-box">
+                <input type="password" name="password" id="password" placeholder="Enter password" required>
+                <button type="button" class="show-btn" onclick="togglePassword()">Show</button>
+            </div>
+
+            <button type="submit" class="submit-btn">Login to Dashboard</button>
+        </form>
+
+        <p class="register">
+            Don't have an account?
+            <a href="{{ url_for('signup') }}">Create Account</a>
+        </p>
+    </div>
+
+</div>
+
+<script>
+function togglePassword() {
+    const password = document.getElementById("password");
+    const button = document.querySelector(".show-btn");
+
+    if (password.type === "password") {
+        password.type = "text";
+        button.innerText = "Hide";
+    } else {
+        password.type = "password";
+        button.innerText = "Show";
+    }
+}
+</script>
+
+</body>
+</html>

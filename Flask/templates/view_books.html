@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Collection - LibraryHub</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6fa;
+            color: #172033;
+        }
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e4e8ef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: #263b80;
+        }
+
+        .logo span {
+            color: #6c63ff;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #526070;
+            font-size: 14px;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: 45px auto;
+            padding: 0 25px;
+        }
+
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 28px;
+        }
+
+        .heading h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #667085;
+        }
+
+        .collection-card {
+            background: white;
+            border: 1px solid #e5e9ef;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(30, 40, 70, 0.06);
+        }
+
+        .collection-header {
+            padding: 22px 28px;
+            border-bottom: 1px solid #edf0f4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collection-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .book-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .collection-title h3 {
+            font-size: 17px;
+        }
+
+        .collection-title p {
+            color: #667085;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .record-label {
+            background: #edf8f5;
+            color: #16856f;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #667085;
+            font-size: 12px;
+            text-transform: uppercase;
+            text-align: left;
+            padding: 16px 20px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 19px 20px;
+            border-top: 1px solid #edf0f4;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        tr:hover {
+            background: #fafbff;
+        }
+
+        .book-name {
+            font-weight: bold;
+            color: #263b80;
+        }
+
+        .id {
+            font-weight: bold;
+            color: #667085;
+        }
+
+        .student {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .student-icon {
+            width: 30px;
+            height: 30px;
+            background: #eeeaff;
+            color: #635bca;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .date {
+            color: #526070;
+        }
+
+        .empty {
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .empty h3 {
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #667085;
+        }
+
+        .footer-action {
+            padding: 20px 28px;
+            background: #fafbfc;
+            border-top: 1px solid #edf0f4;
+        }
+
+        .dashboard-btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 11px 18px;
+            background: #263b80;
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+            .heading {
+                display: block;
+            }
+
+            .collection-header {
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="logo">Library<span>Hub</span></div>
+
+    <a href="{{ url_for('dashboard') }}" class="back">
+        ← Dashboard
+    </a>
+</header>
+
+<main class="page">
+
+    <div class="heading">
+        <div>
+            <h1>Library Collection</h1>
+            <p>View all books currently registered in the system.</p>
+        </div>
+    </div>
+
+    <div class="collection-card">
+
+        <div class="collection-header">
+
+            <div class="collection-title">
+                <div class="book-icon">📚</div>
+
+                <div>
+                    <h3>Book Records</h3>
+                    <p>Current library issue information</p>
+                </div>
+            </div>
+
+            <div class="record-label">
+                ACTIVE RECORDS
+            </div>
+
+        </div>
+
+        {% if books %}
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Book ID</th>
+                        <th>Book Name</th>
+                        <th>Book Number</th>
+                        <th>Student</th>
+                        <th>Issue Date</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for book in books %}
+
+                    <tr>
+
+                        <td class="id">
+                            #{{ book.book_id }}
+                        </td>
+
+                        <td class="book-name">
+                            {{ book.book_name }}
+                        </td>
+
+                        <td>
+                            {{ book.book_number }}
+                        </td>
+
+                        <td>
+                            <div class="student">
+                                <div class="student-icon">
+                                    {{ book.student_name[0]|upper }}
+                                </div>
+
+                                {{ book.student_name }}
+                            </div>
+                        </td>
+
+                        <td class="date">
+                            {{ book.issue_date }}
+                        </td>
+
+                        <td class="date">
+                            {{ book.due_date }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+            <div class="empty-icon">📚</div>
+            <h3>No Books Found</h3>
+            <p>No book issue records are available yet.</p>
+        </div>
+
+        {% endif %}
+
+        <div class="footer-action">
+            <a href="{{ url_for('dashboard') }}" class="dashboard-btn">
+                ← Back to Dashboard
+            </a>
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Book - LibraryHub</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f4f6fa;
+            color: #172033;
+        }
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e4e8ef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: #263b80;
+        }
+
+        .logo span {
+            color: #6c63ff;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #526070;
+            font-size: 14px;
+        }
+
+        .page {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 0 25px;
+        }
+
+        .heading {
+            margin-bottom: 28px;
+        }
+
+        .heading h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #667085;
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 310px 1fr;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(30, 40, 70, 0.08);
+            border: 1px solid #e6eaf0;
+        }
+
+        .side-info {
+            background: #263b80;
+            color: white;
+            padding: 38px 30px;
+        }
+
+        .side-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background: #6c63ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            margin-bottom: 28px;
+        }
+
+        .side-info h2 {
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .side-info p {
+            color: #dbe3ff;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .steps {
+            margin-top: 40px;
+        }
+
+        .step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            align-items: center;
+            color: #e8ecff;
+            font-size: 14px;
+        }
+
+        .number {
+            width: 28px;
+            height: 28px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-area {
+            padding: 38px 42px;
+        }
+
+        .form-area h2 {
+            margin-bottom: 7px;
+        }
+
+        .form-area > p {
+            color: #667085;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 27px;
+        }
+
+        .form-section h3 {
+            font-size: 15px;
+            margin-bottom: 18px;
+            color: #344054;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #475467;
+            margin-bottom: 8px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d7ddea;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .field input:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 3px #eef2ff;
+        }
+
+        .full {
+            grid-column: 1 / 3;
+        }
+
+        .submit-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            border: none;
+            padding: 14px 28px;
+            background: #263b80;
+            color: white;
+            border-radius: 9px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .submit-btn:hover {
+            background: #1d2e68;
+        }
+
+        @media (max-width: 800px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+
+            .side-info {
+                display: none;
+            }
+
+            .fields {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="logo">Library<span>Hub</span></div>
+
+    <a href="{{ url_for('dashboard') }}" class="back">
+        ← Back to Dashboard
+    </a>
+</header>
+
+<main class="page">
+
+    <div class="heading">
+        <h1>Issue a Book</h1>
+        <p>Create a new book issue record by entering the required information.</p>
+    </div>
+
+    <div class="workspace">
+
+        <aside class="side-info">
+
+            <div class="side-icon">📖</div>
+
+            <h2>Book Issue</h2>
+
+            <p>
+                Record which book has been issued,
+                who received it and when it should be returned.
+            </p>
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="number">1</div>
+                    Book information
+                </div>
+
+                <div class="step">
+                    <div class="number">2</div>
+                    Student information
+                </div>
+
+                <div class="step">
+                    <div class="number">3</div>
+                    Issue & due dates
+                </div>
+
+            </div>
+
+        </aside>
+
+        <section class="form-area">
+
+            <h2>Issue Details</h2>
+
+            <p>Enter the details carefully before submitting.</p>
+
+            <form method="POST">
+
+                <div class="form-section">
+
+                    <h3>📚 Book Information</h3>
+
+                    <div class="fields">
+
+                        <div class="field">
+                            <label>Book ID</label>
+                            <input
+                                type="text"
+                                name="book_id"
+                                placeholder="Example: BK-101"
+                                required
+                            >
+                        </div>
+
+                        <div class="field">
+                            <label>Book Number</label>
+                            <input
+                                type="text"
+                                name="book_number"
+                                placeholder="Example: 1001"
+                                required
+                            >
+                        </div>
+
+                        <div class="field full">
+                            <label>Book Name</label>
+                            <input
+                                type="text"
+                                name="book_name"
+                                placeholder="Enter book name"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="form-section">
+
+                    <h3>🎓 Student Information</h3>
+
+                    <div class="fields">
+
+                        <div class="field full">
+                            <label>Student Name</label>
+                            <input
+                                type="text"
+                                name="student_name"
+                                placeholder="Enter student name"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="form-section">
+
+                    <h3>📅 Issue Schedule</h3>
+
+                    <div class="fields">
+
+                        <div class="field">
+                            <label>Issue Date</label>
+                            <input
+                                type="date"
+                                name="issue_date"
+                                required
+                            >
+                        </div>
+
+                        <div class="field">
+                            <label>Due Date</label>
+                            <input
+                                type="date"
+                                name="due_date"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="submit-area">
+                    <button type="submit" class="submit-btn">
+                        Issue Book →
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</main>
+
+</body>
+</html>
